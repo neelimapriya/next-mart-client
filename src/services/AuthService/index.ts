@@ -1,5 +1,5 @@
 "use server";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { FieldValues } from "react-hook-form";
 import { jwtDecode } from "jwt-decode";
 
@@ -35,6 +35,7 @@ export const loginUser = async (userData: FieldValues) => {
     if (result.success) {
       setCookies.set("accessToken", result.data.accessToken);
     }
+    return result;
   } catch (error: any) {
     return Error(error);
   }
@@ -46,6 +47,27 @@ export const getCurrentUser = async () => {
   if (accessToken) {
     decodedData = await jwtDecode(accessToken);
     return decodedData;
+  } else {
+    return null;
   }
-  return decodedData;
+};
+
+export const recaptchaTokenVerification = async (token: string) => {
+ try{
+  const res = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body:new URLSearchParams({
+      secret:process.env.NEXT_PUBLIC_RECAPTCHA_SERVER_KEY!,
+      response:token,
+    }),
+  });
+  return res.json()
+
+ }catch(err:any){
+  return Error(err)
+ }
 };
