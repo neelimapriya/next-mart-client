@@ -19,9 +19,13 @@ import { loginUser, recaptchaTokenVerification, registerUser } from "@/services/
 import { toast } from "sonner";
 import { LoginSchema } from "./loginValidation";
 import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 
 export default function LoginForm() {
+  const searchParam=useSearchParams()
+  const redirect=searchParam.get("redirectPath")
+  const router=useRouter()
   const form = useForm({
     resolver: zodResolver(LoginSchema),
   });
@@ -47,6 +51,11 @@ export default function LoginForm() {
       console.log(res);
       if (res?.success) {
         toast.success(res?.message);
+        if(redirect){
+          router.push(redirect)
+        }else{
+          router.push("/profile")
+        }
       } else {
         toast.error(res?.message);
       }
@@ -93,7 +102,7 @@ export default function LoginForm() {
             )}
           />
           <div className="flex w-full mt-3">
-            <ReCAPTCHA  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY}
+            <ReCAPTCHA  sitekey={(process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY)!}
     onChange={handleRecaptcha} className="mx-auto"/>
           </div>
           <Button
