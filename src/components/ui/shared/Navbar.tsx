@@ -26,7 +26,7 @@ export default function Navbar() {
     Logout();
     setIsLoading(true);
     if (protectedRoute.some((route) => pathname.match(route))) {
-      router.push('/')
+      router.push("/");
     }
   };
 
@@ -70,7 +70,10 @@ export default function Navbar() {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                  <Link href={"/dashboard"}>
+                    <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                  </Link>
+
                   <DropdownMenuItem>My Shop</DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
