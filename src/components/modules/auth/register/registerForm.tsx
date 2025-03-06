@@ -18,6 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { registerUser } from "@/services/AuthService";
 import { toast } from "sonner";
 import { registrationSchema } from "./registerValidation";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
   const form = useForm({
@@ -30,13 +31,16 @@ export default function RegisterForm() {
 
   const password = form.watch("password");
   const passwordConfirm = form.watch("passwordConfirm");
+  const router = useRouter();
   //   console.log(password, passwordConfirm);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await registerUser(data);
+      console.log(res);
       if (res?.success) {
         toast.success(res?.message);
+        router.push("/");
       } else {
         toast.error(res?.message);
       }
@@ -117,7 +121,7 @@ export default function RegisterForm() {
           />
 
           <Button
-            disabled={passwordConfirm && password !== passwordConfirm}
+            disabled={(passwordConfirm && password) !== passwordConfirm}
             type="submit"
             className="mt-5 w-full"
           >

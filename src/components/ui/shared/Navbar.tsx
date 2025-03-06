@@ -54,7 +54,7 @@ export default function Navbar() {
           {user ? (
             <>
               <Link href="create-shop">
-                <Button className="rounded-full" variant="outline">
+                <Button className="rounded-full" >
                   Create shop
                 </Button>
               </Link>
@@ -70,7 +70,7 @@ export default function Navbar() {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <Link href={"/dashboard"}>
+                  <Link href={"/user/dashboard"}>
                     <DropdownMenuItem>Dashboard</DropdownMenuItem>
                   </Link>
 
