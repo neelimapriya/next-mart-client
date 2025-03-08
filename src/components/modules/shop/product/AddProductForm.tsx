@@ -123,7 +123,7 @@ export default function AddProductsForm() {
         (specification[item.key] = item.value)
     );
 
-    // console.log({ availableColors, keyFeatures, specification });
+    console.log({ availableColors, keyFeatures, specification });
 
     const modifiedData = {
       ...data,
@@ -132,9 +132,9 @@ export default function AddProductsForm() {
       specification,
       price: parseFloat(data.price),
       stock: parseInt(data.stock),
-      weight: parseFloat(data.stock),
+      weight: parseFloat(data.weight),
     };
-
+    console.log(modifiedData);
     const formData = new FormData();
     formData.append("data", JSON.stringify(modifiedData));
 
