@@ -39,7 +39,12 @@ export const addProduct = async (productData: FormData): Promise<any> => {
 export const getSingleProduct = async (productId: string) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/product/${productId}`
+      `${process.env.NEXT_PUBLIC_BASE_API}/product/${productId}`,
+      {
+        next: {
+          tags: ["PRODUCT"],
+        },
+      }
     );
     const data = await res.json();
     return data;
@@ -64,7 +69,8 @@ export const updateProduct = async (
         },
       }
     );
-    return res
+    revalidateTag("PRODUCT")
+    return res.json()
   } catch (error: any) {
     return Error(error.message);
   }
