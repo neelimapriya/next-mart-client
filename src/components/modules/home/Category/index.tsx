@@ -1,16 +1,16 @@
-
 import { Button } from "@/components/ui/button";
 import CategoryCard from "@/components/ui/core/CategoryCard";
+import NMContainer from "@/components/ui/core/NMContainer";
 import { getAllCategories } from "@/services/Category";
 import { ICategory } from "@/types";
 import Link from "next/link";
 
-const Category = async() => {
-    const { data: categories } = await getAllCategories();
-    console.log(categories);
-    return (
-        <div>
-            <div className="flex items-center justify-between">
+const Category = async () => {
+  const { data: categories } = await getAllCategories();
+  console.log(categories);
+  return (
+    <NMContainer>
+      <div className="flex items-center justify-between">
         <h2 className="text-3xl font-bold">Category</h2>
         <Link href="/products">
           <Button variant="outline" className="rounded-full">
@@ -23,8 +23,8 @@ const Category = async() => {
           <CategoryCard key={idx} category={category} />
         ))}
       </div>
-        </div>
-    );
+    </NMContainer>
+  );
 };
 
 export default Category;

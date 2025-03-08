@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
+import DiscountModal from "./DiscountModal";
 
 
 
@@ -157,10 +158,10 @@ const ManageProducts = ({
           >
             Add Product <Plus />
           </Button>
-          {/* <DiscountModal
+          <DiscountModal
             selectedIds={selectedIds}
             setSelectedIds={setSelectedIds}
-          /> */}
+          />
         </div>
       </div>
       <NMTable columns={columns} data={products || []} />
