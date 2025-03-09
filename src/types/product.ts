@@ -1,3 +1,4 @@
+import { JSX } from "react";
 
 type Specification = {
     processor: string;
@@ -7,6 +8,7 @@ type Specification = {
   };
   
   export interface IProduct {
+    map(arg0: (product: IProduct, idx: number) => JSX.Element): import("react").ReactNode;
     _id: string;
     name: string;
     description: string;
