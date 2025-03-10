@@ -4,6 +4,7 @@ import { Star } from "lucide-react";
 import Image from "next/image";
 
 const ProductDetails = ({ product }: { product: IProduct }) => {
+    console.log(product);
   return (
     <div className="grid grid-cols-2 gap-4 border border-white p-4 rounded-md my-5 shadow-sm">
       <div>

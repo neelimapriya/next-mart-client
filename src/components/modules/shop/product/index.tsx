@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import DiscountModal from "./DiscountModal";
+import TablePagination from "@/components/ui/core/NMTable/TablePagination";
 
 
 
@@ -165,7 +166,7 @@ const ManageProducts = ({
         </div>
       </div>
       <NMTable columns={columns} data={products || []} />
-      {/* <TablePagination totalPage={meta?.totalPage} /> */}
+      <TablePagination totalPage={meta?.totalPage} />
     </div>
   );
 };
