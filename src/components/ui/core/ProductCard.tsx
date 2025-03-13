@@ -8,20 +8,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import { addProduct } from "@/redux/features/cartSlice";
-// import { useAppDispatch } from "@/redux/hooks";
-
+import { addProduct } from "@/redux/features/cartSlice";
+import { useAppDispatch } from "@/redux/hook";
 import { IProduct } from "@/types";
 import { Heart, ShoppingCart, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
-//   const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
-//   const handleAddProduct = (product: IProduct) => {
-//     dispatch(addProduct(product));
-//   };
+  const handleAddProduct = (product: IProduct) => {
+    dispatch(addProduct(product));
+  };
 
   return (
     <Card className="p-3">
@@ -94,8 +93,8 @@ const ProductCard = ({ product }: { product: IProduct }) => {
             Buy Now
           </Button>
           <Button
-            // onClick={() => handleAddProduct(product)}
-            // disabled={product?.stock === 0}
+            onClick={() => handleAddProduct(product)}
+            disabled={product?.stock === 0}
             variant="outline"
             size="sm"
             className="w-8 h-8 p-0 flex items-center justify-center rounded-full"

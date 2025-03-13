@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
+import { CartProduct } from "@/redux/features/cartSlice";
 
 
 import { Minus, Plus, Trash } from "lucide-react";
 import Image from "next/image";
 
-export default function CartProductCard({ product }) {
+export default function CartProductCard({ product }:{product:CartProduct}) {
 //   const dispatch = useAppDispatch();
 
 //   const handleIncrementQuantity = (id: string) => {
