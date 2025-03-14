@@ -1,24 +1,29 @@
 import { Button } from "@/components/ui/button";
-import { CartProduct } from "@/redux/features/cartSlice";
+import { currencyFormatter } from "@/lib/CurrencyFormatter";
+import { CartProduct, decrementOrderQuantity, incrementOrderQuantity, removeProduct } from "@/redux/features/cartSlice";
+import { useAppDispatch } from "@/redux/hook";
 
 
 import { Minus, Plus, Trash } from "lucide-react";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export default function CartProductCard({ product }:{product:CartProduct}) {
-//   const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-//   const handleIncrementQuantity = (id: string) => {
-//     dispatch(incrementOrderQuantity(id));
-//   };
+  const handleIncrementQuantity = (id: string) => {
+    dispatch(incrementOrderQuantity(id));
+   
+  };
 
-//   const handleDecrementQuantity = (id: string) => {
-//     dispatch(decrementOrderQuantity(id));
-//   };
+  const handleDecrementQuantity = (id: string) => {
+    dispatch(decrementOrderQuantity(id));
+  };
 
-//   const handleRemoveProduct = (id: string) => {
-//     dispatch(removeProduct(id));
-//   };
+  const handleRemoveProduct = (id: string) => {
+    dispatch(removeProduct(id));
+    toast.success("Product removed from cart.")
+  };
 
   return (
     <div className="bg-white rounded-lg flex p-5 gap-5">
@@ -47,14 +52,14 @@ export default function CartProductCard({ product }:{product:CartProduct}) {
         <div className="flex items-center justify-between">
           <h2>
             Price:
-            {/* {product.offerPrice
+            {product.offerPrice
               ? currencyFormatter(product.offerPrice)
-              : currencyFormatter(product.price)} */}
+              : currencyFormatter(product.price)}
           </h2>
           <div className="flex items-center gap-2">
             <p className="text-gray-500 font-semibold">Quantity</p>
             <Button
-            //   onClick={() => handleDecrementQuantity(product._id)}
+              onClick={() => handleDecrementQuantity(product._id)}
               variant="outline"
               className="size-8 rounded-sm"
             >
@@ -64,14 +69,14 @@ export default function CartProductCard({ product }:{product:CartProduct}) {
               {product?.orderQuantity}
             </p>
             <Button
-            //   onClick={() => handleIncrementQuantity(product._id)}
+              onClick={() => handleIncrementQuantity(product._id)}
               variant="outline"
               className="size-8 rounded-sm"
             >
               <Plus />
             </Button>
             <Button
-            //   onClick={() => handleRemoveProduct(product._id)}
+              onClick={() => handleRemoveProduct(product._id)}
               variant="outline"
               className="size-8 rounded-sm"
             >
