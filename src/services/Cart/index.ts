@@ -1,19 +1,12 @@
 "use server";
 
-import { isTokenExpired } from "@/lib/verifyToken";
+import { getValidToken } from "@/lib/verifyToken";
 import { IOrder } from "@/types/cart";
 
-import { cookies } from "next/headers";
-import { getNewToken } from "../AuthService";
+
 
 export const createOrder = async (order: IOrder) => {
-  const cookieStore=await cookies()
-    let token=cookieStore.get("accessToken")!.value
-    if(!token || (await isTokenExpired(token))){
-      const {data}=await getNewToken()
-      token=data?.accessToken
-      cookieStore.set("accessToken",token)
-    }
+   const token=await getValidToken()
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/order`, {
       method: "POST",
@@ -35,13 +28,7 @@ export const addCoupon = async (
   subTotal: number,
   shopId: string
 ) => {
-  const cookieStore=await cookies()
-  let token=cookieStore.get("accessToken")!.value
-  if(!token || (await isTokenExpired(token))){
-    const {data}=await getNewToken()
-    token=data?.accessToken
-    cookieStore.set("accessToken",token)
-  }
+  const token=await getValidToken()
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/coupon/${couponCode}`,
