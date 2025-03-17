@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import { LoginSchema } from "./loginValidation";
 import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useUser } from "@/context/UserContext";
 
 
 export default function LoginForm() {
@@ -29,6 +30,7 @@ export default function LoginForm() {
   const form = useForm({
     resolver: zodResolver(LoginSchema),
   });
+  const {setIsLoading}=useUser()
   const [recaptchaStatus, setRecaptchaStatus]=useState(false)
 
   const {
@@ -49,12 +51,13 @@ export default function LoginForm() {
     try {
       const res = await loginUser(data);
       console.log(res);
+      setIsLoading(true)
       if (res?.success) {
         toast.success(res?.message);
         if(redirect){
           router.push(redirect)
         }else{
-          router.push("/profile")
+          router.push("/")
         }
       } else {
         toast.error(res?.message);

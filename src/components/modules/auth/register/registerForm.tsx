@@ -19,12 +19,13 @@ import { registerUser } from "@/services/AuthService";
 import { toast } from "sonner";
 import { registrationSchema } from "./registerValidation";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/context/UserContext";
 
 export default function RegisterForm() {
   const form = useForm({
     resolver: zodResolver(registrationSchema),
   });
-
+  const {setIsLoading}=useUser()
   const {
     formState: { isSubmitting },
   } = form;
@@ -38,6 +39,7 @@ export default function RegisterForm() {
     try {
       const res = await registerUser(data);
       console.log(res);
+      setIsLoading(true)
       if (res?.success) {
         toast.success(res?.message);
         router.push("/");

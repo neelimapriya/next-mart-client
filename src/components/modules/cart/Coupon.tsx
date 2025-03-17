@@ -6,8 +6,18 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Trash } from "lucide-react";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { toast } from "sonner";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import {
+  fetchCoupon,
+  shopSelector,
+  subTotalSelector,
+} from "@/redux/features/cartSlice";
+import { AnyAction } from "@reduxjs/toolkit";
 
 export default function Coupon() {
+  const subTotal = useAppSelector(subTotalSelector);
+  const shopId = useAppSelector(shopSelector);
+  const dispatch = useAppDispatch();
   const form = useForm();
 
   const couponInput = form.watch("coupon");
@@ -18,7 +28,11 @@ export default function Coupon() {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      console.log(data);
+      const res = dispatch(
+        fetchCoupon({ couponCode: data.coupon, subTotal, shopId }) as any 
+      );
+
+      console.log(res);
     } catch (error: any) {
       console.log(error);
       toast.error(error.message);

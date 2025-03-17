@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const FeaturedProducts = async () => {
   const { data: products } = await getAllProducts();
-console.log(products);
+// console.log(products);
   return (
     <div className=" bg-white bg-opacity-50 pt-6 pb-8">
       <NMContainer className="my-16">
