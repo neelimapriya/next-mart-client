@@ -3,10 +3,31 @@ import { AwardIcon } from "lucide-react";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
-export const getAllProducts = async (page?: string, limit?: string) => {
+export const getAllProducts = async (
+  page?: string,
+  limit?: string,
+  query?: { [key: string]: string | string[] | undefined }
+) => {
+  const params=new URLSearchParams()
+  if(query?.price) {
+    params.append("minPrice","0")
+    params.append("maxPrice",query?.price?.toString())
+  }
+  if(query?.category) {
+    params.append("categories",query?.category.toString())
+    
+  }
+  if(query?.brand) {
+    params.append("brands",query?.brand.toString())
+    
+  }
+  if(query?.rating) {
+    params.append("ratings",query?.rating.toString())
+    
+  }
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/product?limit=${limit}&page=${page}`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/product?limit=${limit}&page=${page}&${params}`,
       {
         next: {
           tags: ["PRODUCT"],
@@ -69,8 +90,8 @@ export const updateProduct = async (
         },
       }
     );
-    revalidateTag("PRODUCT")
-    return res.json()
+    revalidateTag("PRODUCT");
+    return res.json();
   } catch (error: any) {
     return Error(error.message);
   }

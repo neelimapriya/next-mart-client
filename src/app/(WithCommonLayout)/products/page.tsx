@@ -5,11 +5,11 @@ import NMContainer from "@/components/ui/core/NMContainer";
 import { getAllCategories } from "@/services/Category";
 import { getAllProducts } from "@/services/Product";
 import { ICategory } from "@/types";
-
-const AllProductPage = async () => {
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+const AllProductPage = async ({searchParams}:{searchParams: SearchParams}) => {
   const { data: categories } = await getAllCategories();
-  const {data:products}=await getAllProducts()
-  console.log(products);
+  const {data:products}=await getAllProducts(undefined,undefined,query)
+  console.log(await searchParams);
   return (
     <NMContainer>
       <ProductsBanner title="All Products" path="Home-All products" />
